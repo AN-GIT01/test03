@@ -30,19 +30,19 @@ app.use(cors());
 app.use(express.urlencoded({extended: false}))
 
 app.get('/cats', async (req, res) =>{
-    const cats = await getAllCats()
-    console.log(cats)
-    res.json(cats)
+    const db_res = await getAllCats()
+    console.log(db_res.data)
+    res.status(db_res.code).json(db_res.data)
 })
 
 app.get('/cats/:id', async (req, res) =>{
-    const cat = await getCatById(req.params.id)
-    res.json(cat)
+    const db_res = await getCatById(req.params.id)
+    res.status(db_res.code).json(db_res.data)
 })
 
 app.post('/cats', async (req, res) =>{
-    const cat = await createCat(req.body.cat)
-    res.status(201).json(cat)
+    const db_res = await createCat(req.body.cat)
+    res.status(db_res.code).json(db_res.data)
 })
 
 app.delete('/cats', async (req, res) =>{
