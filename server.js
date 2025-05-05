@@ -46,14 +46,14 @@ app.post('/cats', async (req, res) =>{
 })
 
 app.delete('/cats', async (req, res) =>{
-    const cat = await deleteCat(req.body.id)
-    res.status(200).json(cat)
+    const db_res = await deleteCat(req.body.id)
+    res.status(db_res.code).json(db_res.data)
 })
 
 app.patch('/cats', async (req, res) =>{
     console.log(req.body.cat)
-    const cat = await updateCat(req.body.cat)
-    res.status(200).json(cat)
+    const db_res = await updateCat(req.body.cat)
+    res.status(db_res.code).json(db_res.data)
 })
 
 
