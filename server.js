@@ -29,6 +29,9 @@ app.use(cors());
 // // built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({extended: false}))
 
+// //serve static files
+app.use('/', express.static(path.join(__dirname, '/public')));
+
 app.get('/cats', async (req, res) =>{
     const db_res = await getAllCats()
     console.log(db_res.data)
@@ -68,8 +71,7 @@ app.patch('/cats', async (req, res) =>{
 // // Middleware for cookies
 // app.use(cookieParser())
 
-// //serve static files
-// app.use('/', express.static(path.join(__dirname, '/public')));
+
 
 // //routes
 // app.use('/', require('./routes/root'))
