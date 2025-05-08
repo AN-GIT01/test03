@@ -60,6 +60,8 @@ app.patch('/cats', async (req, res) =>{
     res.status(db_res.code).json(db_res.data)
 })
 
+app.use('/register', require('./routs/register'))
+
 
 
 // // custom middleware logger
