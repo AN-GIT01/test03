@@ -49,7 +49,8 @@ app.post('/cats', async (req, res) =>{
 })
 
 app.delete('/cats', async (req, res) =>{
-    const db_res = await deleteCat(req.body.id)
+    console.log(req.body)
+    const db_res = await deleteCat(req.body.cat.id)
     res.status(db_res.code).json(db_res.data)
 })
 

@@ -48,7 +48,7 @@ const createCat = async (cat) => {
 const deleteCat = async (id) => {
   try {
     const dbCat = await prisma.cat.delete({
-      where: { id: parseInt(id) },
+      where: { id: parseInt(id) }
     });
     console.log("Deleted: " + dbCat);
     return reportStatus(200, dbCat);
@@ -66,11 +66,12 @@ const deleteCat = async (id) => {
 };
 
 const updateCat = async (cat) => {
+  cat.id = parseInt(cat.id)
   console.log("want to update: " + cat.id);
   try {
     const dbCat = await prisma.cat.update({
       where: {
-        id: parseInt(cat.id),
+        id: cat.id,
       },
       data: cat,
     });
@@ -82,6 +83,7 @@ const updateCat = async (cat) => {
         message: `Cat with id: ${cat.id} does not exist`,
       });
     } else {
+      // console.log(err);
       console.log("General error: " + err.code);
       return reportStatus(500, { message: "General server error" });
     }
