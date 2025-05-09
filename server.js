@@ -5,6 +5,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
+const verifyJWT = require('./middleware/verifyJWT')
 const {getAllCats, getCatById, createCat, deleteCat, updateCat} = require( path.resolve(__dirname, 'repo', 'cat.js'))
 // const errorHandler = require('./middleware/errorHandler')
 // const {logger} = require('./middleware/logEvents')
@@ -29,8 +31,16 @@ app.use(cors());
 // // built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({extended: false}))
 
+// Middleware for cookies
+app.use(cookieParser())
+
 // //serve static files
 app.use('/', express.static(path.join(__dirname, '/public')));
+
+app.use('/logout', require('./routs/logout'))
+app.use('/login', require('./routs/login'))
+
+app.use(verifyJWT)
 
 app.get('/cats', async (req, res) =>{
     const db_res = await getAllCats()
@@ -61,7 +71,7 @@ app.patch('/cats', async (req, res) =>{
 })
 
 app.use('/register', require('./routs/register'))
-app.use('/login', require('./routs/login'))
+
 
 
 
