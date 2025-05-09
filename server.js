@@ -61,6 +61,7 @@ app.patch('/cats', async (req, res) =>{
 })
 
 app.use('/register', require('./routs/register'))
+app.use('/login', require('./routs/login'))
 
 
 
