@@ -3,7 +3,7 @@ const handleLogout = async (req, res) => {
   if (accessToken) {
     res.clearCookie("jwt", accessToken, {
       httpOnly: true,
-      sameSite: "None",
+      // sameSite: "None",
       secure: true,
     });
   }

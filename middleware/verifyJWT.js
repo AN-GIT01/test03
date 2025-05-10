@@ -18,7 +18,7 @@ const verifyJWT = (req, res, next) => {
     // )
 
     const cookies = req.cookies;
-    if (!cookies?.jwt) return res.sendStatus(401);
+    if (!cookies?.jwt) return res.status(401).json({"message": "cookies absent"});
     const accessToken = cookies.jwt;
 
     jwt.verify(
@@ -26,9 +26,11 @@ const verifyJWT = (req, res, next) => {
         process.env.ACCESS_TOKEN_SECRET,
         (err, decoded) => {
             console.log(decoded);
+            req.user = decoded.UserInfo.username
+            req.roles = decoded.UserInfo.roles.split('\n')
+            next()
         }
     )
-    next()
 }
 
 module.exports = verifyJWT

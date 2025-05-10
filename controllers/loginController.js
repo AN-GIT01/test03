@@ -3,6 +3,10 @@ const jwt = require("jsonwebtoken");
 const { findUserByName } = require("../repo/user");
 
 const handleLogin = async (req, res) => {
+  const cookies = req.cookies;
+  console.log(`cookie available at login: ${JSON.stringify(cookies)}`);
+
+
   const { name, pwd } = req.body.user;
   if (!name || !pwd)
     return res
@@ -18,7 +22,7 @@ const handleLogin = async (req, res) => {
       {
         UserInfo: {
           username: dbUser.name,
-          roles: dbUser.roles,
+          roles: dbUser.role,
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
@@ -27,7 +31,7 @@ const handleLogin = async (req, res) => {
 
     res.cookie("jwt", accessToken, {
       httpOnly: true,
-      sameSite: "None",
+      // sameSite: "None",
       secure: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
