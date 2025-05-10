@@ -1,8 +1,6 @@
 // https://www.youtube.com/watch?v=jivyItmsu18&list=PL0Zuz27SZ-6P4vnjQ_PJ5iRYsqJkQhtUu
 // https://expressjs.com/en/guide/migrating-5.html#path-syntax
 
-http = require('http')
-const https = require('https')
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -14,17 +12,6 @@ const verifyRoles = require('./middleware/verifyRoles')
 const {getAllCats, getCatById, createCat, deleteCat, updateCat} = require( path.resolve(__dirname, 'repo', 'cat.js'))
 const corsOptions = require('./config/corsOptions')
 const credentials = require('./middleware/credentials')
-
-
-// const errorHandler = require('./middleware/errorHandler')
-// const {logger} = require('./middleware/logEvents')
-// const verifyJWT = require('./middleware/verifyJWT')
-// const cookieParser = require('cookie-parser')
-// const corsOptions = require('./config/corsOptions')
-// const credentials = require('./middleware/credentials')
-
-// const getAllPosts = require('./src/api/posts_api')
-
 require('dotenv').config({ path: path.resolve(__dirname, './.env') })
 
 const PORT = process.env.SERVER_PORT || 4500;
@@ -39,9 +26,6 @@ app.use(cors(corsOptions));
  
 // // built-in middleware for json 
 app.use(express.json());
-
-
-
 
 // // built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({extended: false}))
@@ -93,9 +77,4 @@ app.delete('/cats', verifyRoles(ROLES_LIST.ADMIN), async (req, res) =>{
     res.status(db_res.code).json(db_res.data)
 })
 
-// // errors handling
-// app.use(errorHandler)
-
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// http.createServer(app).listen(PORT);
-// https.createServer(app).listen(443);
